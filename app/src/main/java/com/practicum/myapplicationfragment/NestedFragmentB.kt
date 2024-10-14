@@ -11,22 +11,6 @@ import com.practicum.myapplicationfragment.databinding.FragmentBNestedBinding
 // Второй вложенный фрагмент
 class NestedFragmentB : BindingFragment<FragmentBNestedBinding>() {
 
-//    private var _binding: FragmentBNestedBinding? = null
-//    private val binding get() = _binding!!
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        _binding = FragmentBNestedBinding.inflate(inflater, container, false)
-//        return binding.root
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -37,16 +21,13 @@ class NestedFragmentB : BindingFragment<FragmentBNestedBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Установка названия песни и передача данных Activity
         binding.songText.text = (requireActivity() as SongNameProvider).getSongName()
             .plus(other = " | B")
-        /**
-         * Тут также при нажатии на кнопку заменяем фрагмент из "fragment_child_container" на
-         * другой.
-         */
+
+        // Заставляем наш ViewPager переключиться на следующую страницу
         binding.button.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(R.id.fragment_child_container, NestedFragmentA())
-            }
+            (parentFragment as? SelectPage)?.navigateTo(page = 0)
         }
     }
 }

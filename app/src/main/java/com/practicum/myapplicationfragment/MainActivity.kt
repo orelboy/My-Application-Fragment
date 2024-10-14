@@ -7,20 +7,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 // Главная активити, к которой будут привязаны наши фрагменты
-class MainActivity : AppCompatActivity(),
+class MainActivity : AppCompatActivity(R.layout.activity_main),
     SongNameProvider  {
 
-    override fun getSongName(): String = "Muse - Starlight"
+    override fun getSongName(): String = "Jungle - Casio"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            /**
-             * Отображаем родительский фрагмент, в который дальше добавим переключение между
-             * вложенными фрагментами.
-             */
+            // Отображаем родительский фрагмент, в который дальше добавим ViewPager с фрагментами.
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_container, FragmentA.newInstance(getSongName()))
                 .commit()

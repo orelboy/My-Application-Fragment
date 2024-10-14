@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import com.practicum.myapplicationfragment.databinding.FragmentABinding
 
 // Родительский класс, в который положим вложенные классы NestedFragmentA и NestedFragmentB.
+// Родительский класс, в котором будет наш ViewPager
 class FragmentA : BindingFragment<FragmentABinding>() {
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentABinding {
@@ -22,10 +22,9 @@ class FragmentA : BindingFragment<FragmentABinding>() {
         binding.songText.text = requireArguments().getString(SONG_NAME_KEY)
             .plus(other = " | Parent")
 
-        // Добавление первого вложенного фрагмента
-        childFragmentManager.beginTransaction()
-            .add(R.id.fragment_child_container, NestedFragmentA())
-            .commit()
+        // Таким образом происходит установка адаптера нашему ViewPager
+        val adapter = PagerAdapter(hostFragment = this)
+        binding.pager.adapter = adapter
     }
 
     companion object {

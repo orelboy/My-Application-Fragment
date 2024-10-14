@@ -11,8 +11,6 @@ import com.practicum.myapplicationfragment.databinding.FragmentANestedBinding
 // Первый вложенный фрагмент
 class NestedFragmentA : BindingFragment<FragmentANestedBinding>()  {
 
-//    private var _binding: FragmentANestedBinding? = null
-//    private val binding get() = _binding!!
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -20,38 +18,16 @@ class NestedFragmentA : BindingFragment<FragmentANestedBinding>()  {
         return FragmentANestedBinding.inflate(inflater, container, false)
     }
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        _binding = FragmentANestedBinding.inflate(inflater, container, false)
-//        return binding.root
-//    }
-
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        // Установка названия песни - передача данных Activity
+        // Установка названия песни и передача данных Activity
         binding.songText.text = (requireActivity() as SongNameProvider).getSongName()
             .plus(other = " | A")
 
-        /**
-         * При нажатии на кнопку заменяем фрагмент, который находится внутри контейнера
-         * "fragment_child_container", на новый
-         */
+        // Заставляем наш ViewPager переключиться на следующую страницу
         binding.button.setOnClickListener {
-            // Тут транзакция реализована через extension функцию, а не через цепочку из методов
-            parentFragmentManager.commit {
-                replace(R.id.fragment_child_container, NestedFragmentB())
-                addToBackStack(null)
-            }
+            (parentFragment as? SelectPage)?.navigateTo(page = 1)
         }
     }
 }
